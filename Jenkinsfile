@@ -5,10 +5,11 @@ pipeline {
             steps {
                 sh 'go version'
             }
+        }
             stage('build') {
                 steps {
-                 sh 'go build'}
-            }
-        }
-    }
-}
+                 sh 'go build'
+               }
+           }
+      }
+} 
