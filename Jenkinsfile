@@ -1,15 +1,11 @@
+Jenkinsfile (Declarative Pipeline)
 pipeline {
     agent { docker { image 'golang' } }
     stages {
-        stage('version') {
+        stage('build') {
             steps {
                 sh 'go version'
             }
         }
-            stage('build') {
-                steps {
-                 sh 'go build'
-               }
-           }
-      }
-} 
+    }
+}
