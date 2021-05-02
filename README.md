@@ -1,1 +1,1 @@
-Attempting to build a Cloud native application based around the Twelve-Factor App methodology with a modern CI/CD pipeline.
+This project showcases the implementation of a CI/CD pipeline that builds, tests and deploys a containerized microservice application written in Go to AWS. This is an on-going personal project and is still a WIP.
