@@ -3,3 +3,5 @@ This project showcases the implementation of a CI/CD pipeline that builds, tests
 This is an on-going personal project and is still a WIP.
 
 I attempted to keep the resources used within the cloud provider’s free tier, but please be mindful of your billing and make sure to destroy any existing resources deployed in your account to avoid surprises. It is a good idea to use the cloud-nuke tool developed by Gruntwork after you are done experimenting with the demo to avoid any unpleasant surprises.
+
+For more in depth instructions about how to use the demo please head over to this public Notion page https://julscampa.notion.site/IaC-with-Terraform-Demo-266a1fb53460429f84e41551c598790d
