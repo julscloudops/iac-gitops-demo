@@ -3,4 +3,6 @@
 .terraform
 *.iml
 *.un~
+*.DS_Store
+*.vscode
 code-currently-not-being-used
