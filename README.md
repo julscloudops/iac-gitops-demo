@@ -1,1 +1,5 @@
-This project showcases the implementation of a CI/CD pipeline that builds, tests and deploys a containerized microservice application written in Go to AWS. This is an on-going personal project and is still a WIP.
+This project showcases the implementation of a CI/CD pipeline that builds, tests and deploys a containerized microservice application to AWS (in this case the Google Boutique Microservices Demo App developed for showcasing the use of cloud native technologies). All of the infrastructure is deployed to AWS using Terraform and the state is kept in an S3 bucket. The pipeline builds, tests and deploys container images to ECR when a new pull request is made to the respective GitHub repository. ELK Stack is used for centralized logging, log aggregation and providing data analytics for the app running in our EKS cluster. Prometheus is used for showcasing observability (i.e. monitoring and alerting based on metrics).
+
+This is an on-going personal project and is still a WIP.
+
+I attempted to keep the resources used within the cloud provider’s free tier, but please be mindful of your billing and make sure to destroy any existing resources deployed in your account to avoid surprises. It is a good idea to use the cloud-nuke tool developed by Gruntwork after you are done experimenting with the demo to avoid any unpleasant surprises.
