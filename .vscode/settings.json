@@ -1,7 +1,0 @@
-{
-    "files.exclude": {
-        ".terraform": true,
-        ".un~": true,
-        ".vscode": true
-    }
-}
