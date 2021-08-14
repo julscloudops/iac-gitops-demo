@@ -17,11 +17,8 @@ module "eks" {
   cluster_version = "1.18"
   subnets      = module.vpc.private_subnets
 
-
-  # subnets         = [tostring(data.terraform_remote_state.demo_vpc.outputs.public_subnets[0]), tostring(data.terraform_remote_state.demo_vpc.outputs.public_subnets[1]), tostring(data.terraform_remote_state.demo_vpc.outputs.private_subnets[0]), tostring(data.terraform_remote_state.demo_vpc.outputs.private_subnets[1])]
-
   tags = {
-    Environment = "development"
+    Environment = "Dev"
   }
 
   vpc_id = module.vpc.vpc_id

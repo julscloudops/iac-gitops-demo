@@ -21,6 +21,9 @@ data "aws_eks_cluster_auth" "cluster" {
 }
 
 provider "kubernetes" {
+  experiments {
+    manifest_resource = true
+  }
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   exec {
@@ -30,57 +33,3 @@ provider "kubernetes" {
   }
 }
 
-  resource "kubernetes_namespace" "demo_app" {
-  metadata {
-    name = "demo-app"
-  }
-}
-
-resource "kubernetes_deployment" "frontend" {
-  metadata {
-    name      = var.application_name
-    namespace = kubernetes_namespace.demo_app.id
-    labels = {
-      app = var.application_name
-    }
-  }
-
-  spec {
-    replicas = 3
-    selector {
-      match_labels = {
-        app = var.application_name
-      }
-    }
-    template {
-      metadata {
-        labels = {
-          app = var.application_name
-        }
-      }
-      spec {
-        container {
-          image = "gcr.io/google-samples/microservices-demo/frontend:v0.2.4"
-          name  = var.application_name
-        }
-      }
-    }
-  }
-}
-
-resource "kubernetes_service" "frontend" {
-  metadata {
-    name      = var.application_name
-    namespace = kubernetes_namespace.demo_app.id
-  }
-  spec {
-    selector = {
-      app = kubernetes_deployment.frontend.metadata[0].labels.app
-    }
-    port {
-      port        = 8080
-      target_port = 80
-    }
-    type = "LoadBalancer"
-  }
-}
