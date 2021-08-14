@@ -1,4 +1,4 @@
-This project showcases the implementation of a CI/CD pipeline that builds, tests and deploys a containerized microservice application to AWS (in this case the Google Boutique Microservices Demo App developed for showcasing the use of cloud native technologies). 
+This project showcases the implementation of a CI/CD pipeline that builds, tests and deploys a containerized microservice application to AWS with the use of Jenkins and ArgoCD (in this case the Google Boutique Microservices Demo App developed for showcasing the use of cloud native technologies). 
 
 All of the infrastructure is deployed to AWS using Terraform and the state is kept in an S3 bucket. The pipeline builds, tests and deploys container images to ECR when a new pull request is made to the respective GitHub repository. ELK Stack is used for centralized logging, log aggregation and providing data analytics for the app running in the EKS cluster. Prometheus is used for showcasing the implementation of observability (i.e. monitoring and alerting based on metrics).
 
