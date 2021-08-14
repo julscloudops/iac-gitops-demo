@@ -1,0 +1,10 @@
+code-currently-not-being-used/
+*.tfstate
+*.tfstate.backup
+.terraform
+*.iml
+.un~
+.DS_Store
+.vscode
+..gitignore.un~
+.terraform.lock.hcl
