@@ -1,3 +1,4 @@
+code-currently-not-being-used/
 *.tfstate
 *.tfstate.backup
 .terraform
