@@ -9,3 +9,5 @@ module "release-prometheus-operator" {
   grafana_adminPassword  = "pa$$w0rd"
 
 }
+
+

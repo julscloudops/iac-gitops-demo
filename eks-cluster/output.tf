@@ -24,7 +24,7 @@ output "config_map_aws_auth" {
 }
 
 output "region" {
-  description = "AWS region"
+  description = "AWS region."
   value       = var.region
 }
 
@@ -32,21 +32,3 @@ output "cluster_name" {
   description = "Kubernetes Cluster Name"
   value       = local.cluster_name
 }
-
-output "certificate_authority" {
-  value = data.aws_eks_cluster.cluster.certificate_authority
-}
-
-output "vpc_id" {
-  value = module.vpc.vpc_id
-}
-
-output "public_subnets" {
-   value = module.vpc.public_subnets
-}
-
-output "private_subnets" {
- value = module.vpc.private_subnets
-}
-
-
