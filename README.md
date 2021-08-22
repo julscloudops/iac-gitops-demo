@@ -2,4 +2,4 @@ This project showcases the implementation of a CI/CD pipeline that builds, tests
 
 All of the infrastructure is deployed to AWS using Terraform and the state is kept in an S3 bucket. The pipeline builds, tests and deploys container images to ECR when a new pull request is made to the respective GitHub repository of a given microservice. The app itself is deployed using ArgoCD which will constantly update the cluster based on the manifest files of a given GitHub repository. EFK Stack (Elasticsearch, Fluentd and Kibana) are used for centralized logging and data analytics. Prometheus is used for showcasing the implementation monitoring and alerting.
 
-This is an on-going personal project and is still a WIP. For more in depth instructions about how to use the demo please head over to [this public Notion page] (https://julscampa.notion.site/IaC-with-Terraform-Demo-266a1fb53460429f84e41551c598790d)
+This is an on-going personal project and is still a WIP. For more in depth instructions about how to use the demo please head over to this public Notion page: https://julscampa.notion.site/IaC-with-Terraform-Demo-266a1fb53460429f84e41551c598790d
