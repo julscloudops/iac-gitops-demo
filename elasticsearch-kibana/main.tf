@@ -3,11 +3,6 @@ provider "aws" {
   profile = var.aws_profile
 }
 
-resource "aws_key_pair" "elk_auth" {
-  key_name   = var.aws_key_name
-  public_key = file(var.aws_public_key_path)
-}
-
 module "iam" {
   source = "./iam"
 }
@@ -42,9 +37,8 @@ resource "aws_instance" "elasticsearch" {
 
   ebs_block_device {
     device_name = "/dev/sdb"
-    volume_type = "io1"
+    volume_type = "gp3"
     volume_size = "20"
-    iops        = "500"
   }
 
   user_data = data.template_file.init_elasticsearch.rendered

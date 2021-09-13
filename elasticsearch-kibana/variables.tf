@@ -41,3 +41,14 @@ variable "elasticsearch_cluster" {
   default     = "elk_cluster"
 }
 
+variable "peer_owner_id" {
+ description = "Your AWS account ID for configuring VPC peerinG"
+ default = "085876827522"
+}
+
+variable "eks_vpc_id" {
+ description = "The ID of your EKS cluster VPC"
+}
+
+
+

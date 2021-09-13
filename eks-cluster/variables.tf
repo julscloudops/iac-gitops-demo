@@ -11,3 +11,7 @@ DESCRIPTION
 variable "aws_key_name" {
   description = "Name of the AWS key pair"
 }
+
+variable "region" {
+  default = "us-east-2"
+}

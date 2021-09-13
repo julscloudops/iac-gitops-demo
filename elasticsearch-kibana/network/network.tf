@@ -1,8 +1,8 @@
-resource "aws_vpc" "elk_vpc" {
-    cidr_block = "10.0.0.0/16"
+resource "aws_vpc" "elastic_kibana_vpc" {
+    cidr_block = "10.100.0.0/16"
     enable_dns_hostnames = true
     tags = {
-        Name = "ELK VPC"
+        Name = "ELASTIC/KIBANA VPC"
     }
 }
 
