@@ -18,12 +18,12 @@ variable "elk_instance_type" {
   default = "t2.micro"
 }
 
-variable "aws_public_key_path" {
+variable "aws_private_key_path" {
   description = <<DESCRIPTION
 Path to the SSH public key to be used for authentication.
 Ensure this keypair is added to your local SSH agent so provisioners can
 connect.
-Example: ~/.ssh/elk-terraform.pub
+Example: ~/.ssh/cloudops.pem
 DESCRIPTION
 
 }
@@ -35,20 +35,11 @@ variable "aws_key_name" {
 variable "elasticsearch_data_dir" {
   default = "/opt/elasticsearch/data"
 }
-
 variable "elasticsearch_cluster" {
   description = "Name of the elasticsearch cluster"
-  default     = "elk_cluster"
+  default     = "elastic_cluster"
 }
 
-variable "peer_owner_id" {
- description = "Your AWS account ID for configuring VPC peerinG"
- default = "085876827522"
-}
-
-variable "eks_vpc_id" {
- description = "The ID of your EKS cluster VPC"
-}
 
 
 
