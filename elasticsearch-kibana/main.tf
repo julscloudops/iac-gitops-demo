@@ -19,7 +19,7 @@ module "security" {
 }
 
 data "template_file" "init_elasticsearch" {
-  template = file("./user_data/init_esearch.tpl")
+  template = file("./user_data/init_elastic.tpl")
 
   vars = {
     elasticsearch_cluster  = var.elasticsearch_cluster
@@ -48,35 +48,6 @@ resource "aws_instance" "elasticsearch" {
   }
 }
 
-# data "template_file" "init_logstash" {
-#   template = file("./user_data/init_logstash.tpl")
-
-#   vars = {
-#     elasticsearch_host = aws_instance.elasticsearch.private_ip
-#   }
-# }
-
-# resource "aws_instance" "logstash" {
-#   ami           = var.aws_amis[var.aws_region]
-#   instance_type = var.elk_instance_type
-#   key_name      = var.aws_key_name
-#   security_groups = [module.security.esearch_sc_id]
-#   subnet_id       = module.network.elk_private_subnet_id
-
-#   ebs_block_device {
-#     device_name = "/dev/sdb"
-#     volume_type = "io1"
-#     volume_size = "20"
-#     iops        = "500"
-#   }
-
-#   user_data = data.template_file.init_logstash.rendered
-
-#   tags = {
-#     Name = "Logstash instance"
-#   }
-# }
-
 data "template_file" "init_kibana" {
   template = file("./user_data/init_kibana.tpl")
 
@@ -89,7 +60,7 @@ resource "aws_instance" "kibana" {
   ami           = var.aws_amis[var.aws_region]
   instance_type = var.elk_instance_type
   key_name      = var.aws_key_name
-  security_groups = [module.security.elk_sc_id]
+  security_groups = [module.security.kibana_sc_id]
   subnet_id       = module.network.elk_public_subnet_id
 
   ebs_block_device {
