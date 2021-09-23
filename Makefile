@@ -55,6 +55,7 @@ install-cert-manager:
 	--repo https://github.com/julscloudops/ManifestsForArgoCD \
 	--path charts/cert-manager --dest-namespace cert-manager \
 	--dest-server https://kubernetes.default.svc 
+	
 	argocd app sync cert-manager
 	kubectl apply -f app-layer/ssl-setup/cert-issuer-nginx-ingress.yaml
 
@@ -64,16 +65,22 @@ install fluentd:
 	--repo https://github.com/julscloudops/ManifestsForArgoCD \
 	--path charts/fluentd --dest-namespace fluentd \
 	--dest-server https://kubernetes.default.svc 
-
 	argocd app sync fluentd
-	
+
+install-sealed-secrets:
+	kubectl create namespace sealed-secrets || true
+	argocd app create sealed-secrets \
+	--repo https://github.com/julscloudops/ManifestsForArgoCD \
+	--path charts/sealed-secrets --dest-namespace sealed-secrets \
+	--dest-server https://kubernetes.default.svc 
+	argocd app sync sealed-secrets
+
 install-velero:
 	kubectl create namespace velero || true
 	argocd app create velero \
 	--repo https://github.com/julscloudops/ManifestsForArgoCD \
 	--path charts/velero --dest-namespace velero \
 	--dest-server https://kubernetes.default.svc 
-
 	argocd app sync velero
 	
 cleanup:
@@ -86,4 +93,4 @@ cleanup:
 	kubectl delete ns ingress-nginx
 	kubectl delete ns cert-manager
 	kubectl delete ns fluentd
-	# kubectl delete ns velero
+	kubectl delete ns velero
