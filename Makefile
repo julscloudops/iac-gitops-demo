@@ -59,24 +59,39 @@ install-cert-manager:
 	argocd app sync cert-manager
 	kubectl apply -f app-layer/ssl-setup/cert-issuer-nginx-ingress.yaml
 
-install fluentd:
-	kubectl create namespace fluentd || true
+install-fluentd:
+	kubectl create namespace logging || true
 	argocd app create fluentd \
 	--repo https://github.com/julscloudops/ManifestsForArgoCD \
-	--path charts/fluentd --dest-namespace fluentd \
+	--path charts/fluentd --dest-namespace logging \
 	--dest-server https://kubernetes.default.svc 
 	argocd app sync fluentd
 
+install-elasticsearch:
+	argocd app create elasticsearch \
+	--repo https://github.com/julscloudops/ManifestsForArgoCD \
+	--path charts/elasticsearch --dest-namespace logging \
+	--dest-server https://kubernetes.default.svc 
+	argocd app sync elasticsearch
+
+install-kibana:
+	argocd app create kibana \
+	--repo https://github.com/julscloudops/ManifestsForArgoCD \
+	--path charts/kibana --dest-namespace logging \
+	--dest-server https://kubernetes.default.svc 
+	argocd app sync kibana
+
 install-sealed-secrets:
-	kubectl create namespace sealed-secrets || true
 	argocd app create sealed-secrets \
 	--repo https://github.com/julscloudops/ManifestsForArgoCD \
-	--path charts/sealed-secrets --dest-namespace sealed-secrets \
+	--path charts/sealed-secrets --dest-namespace kube-system \
 	--dest-server https://kubernetes.default.svc 
 	argocd app sync sealed-secrets
 
 install-velero:
 	kubectl create namespace velero || true
+	kubectl create secret generic -n velero credentials --from-file=cloud=credentials
+
 	argocd app create velero \
 	--repo https://github.com/julscloudops/ManifestsForArgoCD \
 	--path charts/velero --dest-namespace velero \
@@ -92,5 +107,5 @@ cleanup:
 	kubectl delete ns monitoring
 	kubectl delete ns ingress-nginx
 	kubectl delete ns cert-manager
-	kubectl delete ns fluentd
+	kubectl delete ns logging
 	kubectl delete ns velero
