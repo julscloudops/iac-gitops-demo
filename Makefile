@@ -1,4 +1,4 @@
-.PHONY: list cleanup
+.PHONY: list bootstrap cleanup
 
 list:
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
@@ -17,18 +17,7 @@ proxy-argocd:
 	export URL=http://127.0.0.1:8080/
 	echo "Argo CD URL: http://127.0.0.1:8080/"
 
-bootstrap:
-	add-helm-repo
-	install-demo-app
-	install-prometheus
-	install-grafana 
-	install-ingress-nginx
-	install-cert-manager 
-	install-fluentd 
-	install-elasticsearch 
-	install-kibana 
-	install-sealed-secrets
-	install-velero 
+bootstrap: add-helm-repo install-demo-app install-prometheus install-grafana install-ingress-nginx install-cert-manager install-fluentd install-elasticsearch install-kibana install-sealed-secrets install-velero 
 
 add-helm-repo:
 	argocd repo add https://github.com/julscloudops/ManifestsForArgoCD
@@ -70,9 +59,9 @@ install-cert-manager:
 	argocd app create cert-manager \
 	--repo https://github.com/julscloudops/ManifestsForArgoCD \
 	--path charts/cert-manager --dest-namespace cert-manager \
-	--dest-server https://kubernetes.default.svc 
-	
+	--dest-server https://kubernetes.default.svc 	
 	argocd app sync cert-manager
+	kubectl wait --for=condition=available deployment -l "app.kubernetes.io/instance=cert-manager" -n cert-manager --timeout=600s
 	kubectl apply -f app-layer/ssl-setup/cert-issuer-nginx-ingress.yaml
 
 install-fluentd:
