@@ -1,4 +1,4 @@
-# .PHONY: install-argocd get-argocd-password check-argocd-ready proxy-argocd-ui 
+.PHONY: list cleanup
 
 list:
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
@@ -14,10 +14,26 @@ check-argocd-ready:
 # It is required to login into ArgoCD CLI to be able to deploy the applications
 proxy-argocd:
 	kubectl port-forward --namespace argocd svc/argo-cd-server 8080:80 &
-	argocd login localhost:8080
+	export URL=http://127.0.0.1:8080/
+	echo "Argo CD URL: http://127.0.0.1:8080/"
+
+bootstrap:
+	add-helm-repo
+	install-demo-app
+	install-prometheus
+	install-grafana 
+	install-ingress-nginx
+	install-cert-manager 
+	install-fluentd 
+	install-elasticsearch 
+	install-kibana 
+	install-sealed-secrets
+	install-velero 
+
+add-helm-repo:
+	argocd repo add https://github.com/julscloudops/ManifestsForArgoCD
 
 install-demo-app:
-	argocd repo add https://github.com/julscloudops/ManifestsForArgoCD
 	kubectl create namespace demo-app || true
 	argocd app create demo-app \
 	--repo https://github.com/julscloudops/ManifestsForArgoCD \
@@ -91,13 +107,12 @@ install-sealed-secrets:
 install-velero:
 	kubectl create namespace velero || true
 	kubectl create secret generic -n velero credentials --from-file=cloud=credentials
-
 	argocd app create velero \
 	--repo https://github.com/julscloudops/ManifestsForArgoCD \
 	--path charts/velero --dest-namespace velero \
 	--dest-server https://kubernetes.default.svc 
 	argocd app sync velero
-	
+
 cleanup:
 	helm delete argocd || true
 	kubectl delete appprojects.argoproj.io --all
